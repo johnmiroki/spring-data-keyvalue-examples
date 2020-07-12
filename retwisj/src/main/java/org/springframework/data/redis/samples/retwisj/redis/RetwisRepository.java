@@ -15,22 +15,6 @@
  */
 package org.springframework.data.redis.samples.retwisj.redis;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.BulkMapper;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -39,19 +23,21 @@ import org.springframework.data.redis.core.query.SortQuery;
 import org.springframework.data.redis.core.query.SortQueryBuilder;
 import org.springframework.data.redis.hash.DecoratingStringHashMapper;
 import org.springframework.data.redis.hash.HashMapper;
-import org.springframework.data.redis.hash.JacksonHashMapper;
+import org.springframework.data.redis.hash.Jackson2HashMapper;
 import org.springframework.data.redis.samples.retwisj.Post;
 import org.springframework.data.redis.samples.retwisj.Range;
 import org.springframework.data.redis.samples.retwisj.RetwisSecurity;
 import org.springframework.data.redis.samples.retwisj.web.WebPost;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
-import org.springframework.data.redis.support.collections.DefaultRedisList;
-import org.springframework.data.redis.support.collections.DefaultRedisMap;
-import org.springframework.data.redis.support.collections.DefaultRedisSet;
-import org.springframework.data.redis.support.collections.RedisList;
-import org.springframework.data.redis.support.collections.RedisMap;
-import org.springframework.data.redis.support.collections.RedisSet;
+import org.springframework.data.redis.support.collections.*;
 import org.springframework.util.StringUtils;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Twitter-clone on top of Redis.
@@ -74,8 +60,7 @@ public class RetwisRepository {
 	// global timeline
 	private final RedisList<String> timeline;
 
-	private final HashMapper<Post, String, String> postMapper = new DecoratingStringHashMapper<Post>(
-			new JacksonHashMapper<Post>(Post.class));
+	private final HashMapper<Post, String, String> postMapper = null;
 
 	@Inject
 	public RetwisRepository(StringRedisTemplate template) {
